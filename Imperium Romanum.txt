@@ -1,0 +1,530 @@
+    1 print"{clr}";:ti$="000000" : rem roman empire, which micro?, april 1984
+    2 dimy$(18):se=0:e1$="german attack ":e2$="german build ":e3$="german hire "
+    3 y$(1)="{home}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}"
+    4 fori=2to18
+    5 y$(i)=left$(y$(1),24-i)
+    6 nexti
+    7 s$="status ":m$="market ":c$="castle ":g$="granary "
+    8 v$="wall ":v1$="ambush ":f$="artillery ":p$="pons ":l$="legion ":b$="battle "
+    9 a$="pieces ":l1$="troops ":l2$="units":t$="argentum ":c1$="captured officers"
+   10 a$(6)="{home}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}":rem30r
+   11 fori=1to5:a$(i)=left$(a$(6),5*i)
+   12 nexti:a1$="anno domini "
+   13 an=1:av=1:an$(1)="spring":an$(2)="summer":an$(3)="autumn":an$(4)="winter"
+   14 rt=2000:pt=rt:rm=0:pm=rm:ro=1:rc=3:rh=6:rf=1:rv=0:rp=2:rl=0:fl=rl
+   15 po=ro:pc=rc:ph=rh:pf=rf:pv=3
+   16 co=1500:cc=6000:ch=600:cv=250:cf=900:cp=500:cl=100
+   17 dimm(36,19):cr=0:ce=0:rp=0:rem restore
+   18 rem an=year,spring(...);cr,ce=captured
+   19 print"{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}imperium romanum":print"{down}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}{rght}h.topf  1984"
+   20 print"{down}{down}reading data......"
+   21 forx=1to36:fory=10to18:m(x,y)=-1:nexty,x
+   22 forx=1to36:fory=1to9:m(x,y)=+1:nexty,x:rem mat=+-1
+   23 rem  map
+   24 forx=1to17:m(x,8)=0:nextx
+   25 forx=20to36:m(x,11)=0:nextx
+   26 m(18,9)=0:m(19,10)=0
+   27 x=int(17*rnd(1)):m(x,8)=1.6:x=int(10*rnd(1))+20:m(x,11)=1.6
+   28 fori=1to3:x=int(36*rnd(1))+1:m(x,12)=-1.4:nexti
+   29 gosub34:m(x+9,5)=1.1:gosub34:m(x+5,15)=-1.1
+   30 gosub34:m(x,6)=1.2:m(x+19,7)=1.2:m(x+10,6)=1.2
+   31 gosub34:m(x,13)=-1.2:m(x+19,14)=-1.2:m(x+10,14)=-1.2
+   32 gosub34:m(x,4)=1.7:gosub34:m(x,16)=-1.7
+   33 goto 35
+   34 x=int(15*rnd(1))+1:return
+   35 forx=5to35step6:y=int(3*rnd(1))+1:m(x,y)=1.3:m(x-1,y+15)=-1.3:nextx
+   36 printy$(16);"enter difficulty level (1-4)":inputdi:ifdi<1ordi>4then36
+   37 ap=10:ar=9:forx=1to35stepdi
+   38 pa=(int(3*rnd(1))+1)/10:ra=.2
+   39 ifm(x,ap)=-1thenm(x,ap)=-2-pa:ifm(x,ar)=1thenm(x,ar)=2+ra:rm=rm+2:pm=pm+10*pa
+   40 nextx:m(36,ar)=2+ra:rm=rm+2
+   41 print"{home}{down}{down}{down}{down}{down}{down}{down}{down}{down}{down}use a saved game (y/n)?":getz$:ifz$=""then41
+   42 gosub235:gosub58:goto85:rem start
+   43 r$="roman ":e$="german ":gosub59:rem status
+   44 printm$;a$(2);ro;po;r$;"/ ";e$
+   45 printc$;a$(2);"{down}";rc;pc
+   46 printg$;a$(2);"{down}{down}";rh;ph
+   47 printf$;a$(2);"{down}{down}{down}";rf;pf
+   48 gosub58
+   49 printt$;a$(3);rt;pt;a$
+   50 printv$;"/ ";v1$;a$(3);"{down}";rv;pv
+   51 printl2$;a$(3);"{down}{down}";int(rm);int(pm)
+   52 gosub470:print"v.-points ";a$(3);"{down}{down}{down}";vr;vg
+   53 gosub58:rl=int(rl):pl=int(pl):ifrl=0andpl=0thenreturn
+   54 print"milites (r/e)";a$(4);int(600*rm);int(600*pm)
+   55 printc1$;a$(4);"{down}";int(cr*9);int(ce*9):print"killed ";a$(4);"{down}{down}";rl;pl
+   56 print"battles";nb;"(v/l)";a$(4);"{down}{down}{down}";wr;wg
+   57 gosub58:return
+   58 input"  press return{left}{left}{left}{left}{left}{left}{left}{left}{left}{left}{left}{left}{left}";y$:rem removes 5 lines
+   59 print"{home}";:fory8=1to5:fory6=1to39:print" ";:next:print:next
+   60 print"{home}";
+   61 return
+   62 gosub59:printm$;:gosub281
+   63 m(a,b)=1.1:rt=rt-co:ro=ro+1:z=b:gosub364:return
+   64 gosub59:printc$;:gosub281:ifa=360orb=18thenreturn
+   65 ifm(a,b+1)<>1andm(a+1,b)<>1thenprint"error":return
+   66 m(a,b)=1.2:rt=rt-cc:rc=rc+1:z=b:gosub364:return
+   67 gosub59:printg$;:gosub281:ifa>34orb>16thenreturn
+   68 x=a+1:y=b+1:ifm(a,b)=1and(m(x,b)>1orm(x,y)>1orm(a,y)>1)then70
+   69 print"there is nothing in";x;y;x;b:print"or";a;y:gosub58:return
+   70 rh=rh+1:z=b:rt=rt-ch:m(a,b)=1.3:gosub364:return
+   71 gosub59:printv$:gosub281:ifb=1orb=36ora=0ora=36thenreturn
+   72 m1=m(a,b-1):m2=m(a+1,b):m3=m(a-1,b):vv=vv+1
+   73 ifm1>1orm2>1orm3>1thenm(a,b)=1.4:rt=rt-cv:rv=rv+1:z=b:gosub364:return
+   74 print"error":return
+   75 gosub59:printp$;:gosub277:ifm(a,b)<>0thenreturn
+   76 m(a,b)=1.6:rt=rt-cp:rp=rp+1:z=b:gosub364:return
+   77 gosub59:printc$;:gosub277:ifm(a,b)<>1.2orm(a+1,b)<>1thenprint"error":return
+   78 m(a+1,b)=1.7:rt=rt-cf:rf=rf+1:z=b:gosub364:return
+   79 gosub59:printc$;":input ";
+   80 print"x,y";:inputkx,ky:ifm(kx,ky+1)<>1thenprint"error":return
+   81 ifm(kx,ky)<>1.2thenprint"error":return
+   82 m(kx,ky+1)=2.9:rm=rm+9:rt=rt-9*cl:z=ky+1:gosub364:gosub59:return
+   83 gosub457:ifse<>0then304:rem loose of game
+   84 rt=rt+int((.7*ro*co)+(.5*rh*ch)+(.3*rc*cc)):rt=rt-int(cl*rm+25*rp):gosub398
+   85 pt=pt+int((.5*ph*ch)+(.3*pc*cc)+(.7*po*co)):pt=pt-int(cl*pm):pp=0
+   86 ifan=1andav=1thenav=av+.5:goto100
+   87 gosub59:print"{home}";s$;m$;c$;"{rght}{rght}{rght}";g$:printv$;"{rght}{rght}";p$;"{rght}{rght}";f$;l$:printb$;"quit"
+   88 getz$:ifz$=""then88
+   89 ifz$="s"thengosub43
+   90 ifz$="m"thengosub62
+   91 ifz$="c"thengosub64
+   92 ifz$="g"thengosub67
+   93 ifz$="w"andvv<5thengosub71
+   94 ifz$="p"thengosub75
+   95 ifz$="a"thengosub77
+   96 ifz$="l"thengosub79
+   97 ifz$="q"thengosub59:goto1000
+   98 ifz$<>"b"then87
+   99 gosub464:gosub480:goto119
+  100 gosub59:ifpc<2orpc<rcthengosub290:goto105
+  101 gosub59:ifpo<2thengosub290:goto106
+  102 ifph<po+pc+2thengosub290:goto107
+  103 ifpf<5 thengosub290:goto109
+  104 gosub59:gosub290:if(pm<rm or pc>rc+2)and(pp<3*pc)or(av<2)then110
+  105 ifpt>ccandph>pc+pothenpt=pt-cc:pc=pc+1:m(a,b)=-1.2:print"{home}{down}";e2$;c$:goto104
+  106 ifpt>2*coandph>po+pcthenpt=pt-co:po=po+1:m(a,b)=-1.1:print"{home}{down}";e2$;m$:goto104
+  107 ifpt>2*chthenpt=pt-ch:ph=ph+1:m(a,b)=-1.3:print"{home}{down}";e2$;g$:goto104
+  108 ifpt>2*cvthenpt=pt-cv:pv=pv+1:m(a,b)=-1.4:print"{home}{down}";e2$;v$:goto104
+  109 ifpt>cfthenpt=pt-cf:pf=pf+1:m(a,b)=-1.7:print"{home}{down}";e2$;f$:goto104
+  110 pp=pp+1:ifpt>1000thenpm=pm+5:pt=pt-5*cl:gosub59:print"{home}{down}";e3$;l1$:gosub114
+  111 ifpp>=2*pcanfpt>cl*pmthen104
+  112 ifpp<=2*pcthen110
+  113 print"{home}{down}{down}";e2$;"nothing more":gosub58:gosub43:gosub463:goto186:rem attack
+  114 x=int(37*rnd(1)):y=3
+  115 ifm(x,y)=-1thenm(x,y)=-2.5:return
+  116 if(m(x,y)<-2)and(m(x,y)>-2.6)thenm(x,y)=m(x,y)-.5:return
+  117 y=y+1:ify>16then114
+  118 goto115
+  119 gosub59:av=av+.5:ifav>=4.5thenav=1:an=an+1:rem begin ,self
+  120 ifrf>0then163:rem funda=rf or move =sm
+  121 sm=sm+1:ifsm>5+rm/50then100
+  122 gosub59:print"troops to move":ifint(av)=1thensm=sm+1:rem winter
+  123 gosub277:ifa=1andb=1then100
+  124 a1=a
+  125 b1=b
+  126 n=m(a1,b1):rem roman
+  127 ifn>1.6then129
+  128 goto122
+  129 gosub260:ifn>1.7then133
+  130 ifm(a,b)=1thenm(a,b)=1.7:m(a1,b1)=1:goto147
+  131 ifm(a,b)=1.6thengosub455:ifbr=1then147
+  132 ifbr=0thensm=sm-1:goto121
+  133 m=m(a,b):ifm=1thenm(a,b)=n:m(a1,b1)=1:rr=rr+1:sm=sm-1:goto147:remm=newfield
+  134 ifm>2then150
+  135 ifm<0then140:rem battle or seize
+  136 ifm=1.5thenm(a1,b1)=1:m(a,b)=n:goto147:rem *
+  137 ifm=1.6thengosub455:ifbr=1thenrr=rr+1:goto147
+  138 ifbr=0thensm=sm-1:goto121
+  139 sm=sm-1:m(a,b)=n:m(a1,b1)=1:goto147:rem roman reserves or wrong play
+  140 ifm<=-2thengosub430:goto147
+  141 ifm=-1then155:rem seize land
+  142 ifm=-1.1thenm(a,b)=1.1:m(a1,b1)=n:ro=ro+1:po=po-1:goto147
+  143 ifm=-1.2thenm(a,b)=1.2:m(a1,b1)=n:rc=rc+1:pc=pc-1:goto147
+  144 ifm=-1.3thenm(a,b)=1.3:m(a1,b1)=n:rh=rh+1:ph=ph-1:goto147
+  145 ifm=-1.4thenrk=(n-2)/3:m(a,b)=n-rk:m(a1,b1)=1:rl=rl+60*rk:rm=rm-rk:pv=pv-1
+  146 ifm=-1.7thenm(a,b)=1.7:m(a1,b1)=n:rf=rf+1:pf=pf-1
+  147 z=b:gosub364:z=b1:gosub364:ifm=-1.4thenprint"{home}{down}{down}trapped in";a,b:gosub58
+  148 ifrr>rsthen101
+  149 goto121
+  150 n=n-2:m=m-2:m=m+n:ifm>2thenprint"{home}more than 2 legions":sm=sm-1:goto121
+  151 n=1:m=m+2
+  152 m(a,b)=m:m(a1,b1)=n
+  153 z=b:gosub364:ifb=b1then121
+  154 z=b1:gosub364:goto121
+  155 n=(n-2)*10:gosub59:print"you have ";int(n)+1;l2$;" to move "
+  156 input"how many , to go forward ";m:m=int(m):ifm>=nthenm=n
+  157 ifm<=0thenm=0:n1=n
+  158 n1=n-m:m=m/10:m(a,b)=m+2:ifm=0thenm(a1,b1)=n1:m(a,b)=1
+  159 n1=n1/10:m(a1,b1)=n1+2:ifn1=0thenm(a1,b1)=1
+  160 z=b:gosub364
+  161 ifb=b1then121
+  162 z=b1:gosub364:goto121
+  163 rem self,funda,coordinates
+  164 sa=sa+1:ifsa>rfthen121
+  165 gosub59:input"gun location ";a,b:ifa<0orb<0ora>36orb>18then165
+  166 ifa=0orb=0then121
+  167 ifm(a,b)<>1.7then165
+  168 ax=a:by=b
+  169 rem target
+  170 gosub59:input"target";a,b
+  171 ifsqr((ax-a)^2+(by-b)^2)<6+5*rnd(1)then174
+  172 rem aberation
+  173 b=int(b-3*rnd(1))
+  174 a=int(a+rnd(1)*2-2*rnd(1))
+  175 b=int(b+2*rnd(1)-2*rnd(1))
+  176 ifa>0anda<37andb>0andb<19then178
+  177 gosub58:print"out of map ":goto164
+  178 gosub179:goto164
+  179 n=m(a,b)
+  180 ifn=0thenm(a,b)=0:print"{home}{down}{down}water":gosub58:return
+  181 ifn=1.6thenprint"{home}{down}";p$:m(a,b)=0:z=b:gosub405:return
+  182 ifn>0thengosub348:ifn>2thenm(a,b)=(n-2)/1.5+2:z=b:gosub405:return
+  183 ifn<0 thengosub 356:ifn<-2thenm(a,b)=(n+2)/1.5-2:z=b:gosub405:return
+  184 ifm(a,b)<>1.5thenm(a,b)=1.5:z=b:gosub405
+  185 return
+  186 sm=0 :rem end self
+  187 rem pet moves
+  188 zc=0:ifpf>0then222:rem computer funda
+  189 gosub59:cm=cm+1:ifcm>7+pm/50then83
+  190 px=int(37*rnd(1)):b=2:ifint(av)=1thencm=cm+1:rem winter
+  191 a=px:print"{home}{down}{down}";ti$
+  192 ifm(a,b)<-2thenm=m(a,b):goto196
+  193 b=b+1:ifb>17then190
+  194 goto191
+  195 cm=cm-1:goto189:rem no troops foundin line a
+  196 m=abs(m):a1=a:b1=b
+  197 rem looking for target
+  198 q=1:q1=1
+  199 forx=a-1toa+1
+  200 ifx<1orx>36then205
+  201 fory=b+1tob-1step-1
+  202 ify<1ory>18then204
+  203 ifm(x,y)>0thenq=0:x1=x:y1=y:m1=m(x,y):ifm1<>1andm1<>1.5thenq1=0:x2=x:y2=y
+  204 nexty
+  205 nextx:ifq1=0thenx1=x2:y1=y2:m1=m(x1,y1):goto207
+  206 ifqthen193
+  207 ifm1=1orm1=1.5orm1=-1thenm(x1,y1)=m(a1,b1):m(a1,b1)=-1:gosub220:goto396
+  208 ifm1=1.6then452
+  209 ifm1>1andm1<2thenm(x1,y1)=m(a1,b1):goto212:rem consequenzes
+  210 a1=x1:b1=y1:n=m1:gosub430:z=b:gosub405:ifb=b1then189
+  211 z=b1:gosub405:goto189:rem m=pet:n=roman
+  212 gosub59
+  213 ifm1=1.1thenro=ro-1:po=po+1:gosub220:printe1$;m$;:m(x1,y1)=-1.1:goto396
+  214 ifm1=1.2thenrc=rc-1:pc=pc+1:gosub220:printe1$;c$;:m(x1,y1)=-1.2:goto396
+  215 ifm1=1.3thenrh=rh-1:ph=ph+1:gosub220:printe1$;g$;:m(x1,y1)=-1.3:goto396
+  216 ifm1=1.7thenrf=rf-1:pf=pf+1:gosub220:printe1$;f$;:m(x1,y1)=-1.7:goto396
+  217 ifm1=1.6thenrp=rp-1:printp$;:gosub220:m(x1,y1)=m:m(a1,b1)=-1:goto396
+  218 gosub220:printe1$;v$;:pk=(m-2)/2:m(x1,y1)=-m+pk:pl=pl+60*pk:m(a,b)=-1
+  219 pm=pm-pk:rv=rv-1:goto396
+  220 gosub59:ifb1<>1andy1<>1thenreturn
+  221 gosub457:ifse<>0thengoto304
+  222 gosub59:ca=ca+1:ifca>pfthen189:rem computer funda
+  223 x=int(37*rnd(1)):y=int(9*rnd(1)):y=y+int(av)+1:ifm(x,y)<=0then223
+  224 m=m(x,y):x1=x:y1=y:gosub220:print"{home}hit at ";x;y;" by ";f$:ifm=1.5then222
+  225 ifm>2then233:rem troops
+  226 ifm=1.1thenro=ro-1:print"{home}{down}{down}";m$;
+  227 ifm=1.2thenrc=rc-1:print"{home}{down}{down}";c$;
+  228 ifm=1.3thenrh=rh-1:print"{home}{down}{down}";g$;
+  229 ifm=1.4thenrv=rv-1:print"{home}{down}{down}";v$;
+  230 ifm=1.6thenrp=rp-1:print"{home}{down}{down}";p$;:m(x,y)=0:z=y:gosub405:goto222
+  231 ifm=1.7thenrf=rf-1:print"{home}{down}{down}";f$;
+  232 m(x,y)=1.5:z=y:gosub405:goto222
+  233 rk=(m-2)/3:rl=rl+60*rk:rm=rm-rk
+  234 m(x,y)=m-rk:z=y:gosub364:print"{home}{down}{down}";l1$;:goto222
+  235 ifz$="y"then800
+  236 print"{clr}"
+  237 printa$(6);"{rght}{rght}{rght}{rght}{rght}{rght}{rght}{down}{down}{down}{down}{down}X{down}{down}{left}s{down}{down}{left}p{down}{down}{left}q{down}{down}{left}r{down}{down}{left}X"
+  238 print"{home}orbis romanus";a$(3);a1$;an;a$(5);"{down}";an$(int(av))
+  239 cm=0:sm=0:rr=0:sa=0:ca=0
+  240 print"{home}{down}"fre(0);:print"bytes free"
+  241 print"{home}{down}{down}{down}{down}"
+  242 forv=18to1step-1
+  243 foru=1to36:w=m(u,v):ifw=-1thenprint"g";:goto251
+  244 ifw=0thenprint" ";:goto251
+  245 ifw=1thenprint"+";:goto251
+  246 ifse<>0then321
+  247 ifw<0thenprint"g";:goto251
+  248 ifw<2then326
+  249 ifw>2thengosub442
+  250 goto251
+  251 nextu
+  252 ifv<>int(v/2)*2then254
+  253 printv"{left}";
+  254 print
+  255 nextv
+  256 print" 0 0 0 0 1 1 1 1 1 2 2 2 2 2 3 3 3 3 "
+  257 print" 2 4 6 8 0 2 4 6 8 0 2 4 6 8 0 2 4 6 {home}":rem home
+  258 gosub59
+  259 return
+  260 gosub59
+  261 print"direction to march (nn-ss)";
+  262 inputq$
+  263 ifq$="nw"thenb=b+1:a=a-1:goto272
+  264 ifq$="n"orq$="nn"thenb=b+1:goto272
+  265 ifq$="ne"thenb=b+1:a=a+1:goto272
+  266 ifq$="e"orq$="ee"thena=a+1:goto272
+  267 ifq$="se"thenb=b-1:a=a+1:goto272
+  268 ifq$="s"orq$="ss"thenb=b-1:goto272
+  269 ifq$="sw"thenb=b-1:a=a-1:goto272
+  270 ifq$="w"orq$="ww"thena=a-1:goto272
+  271 goto260
+  272 ifa>0anda<37andb>0andb<19then274
+  273 print"out of map":a=a1:b=b1:gosub58:goto260
+  274 ifm(a,b)=0thenprint"water":a=a1:b=b1:gosub58:goto260
+  275 return
+  276 gosub59
+  277 input":input (x,y)";a,b
+  278 ifa<1orb<1ora>36orb>19thengosub58:goto277
+  279 return
+  280 gosub59
+  281 gosub277
+  282 n=m(a,b):ifn=1thenreturn
+  283 ifn=0thenprint" water! ":goto281
+  284 goto285
+  285 ifn>0then288
+  286 print" enemies land ";
+  287 goto281
+  288 print" there is some else ";:gosub58
+  289 goto281
+  290 gosub293:rem searching for m(a,b)
+  291 ifm(a,b)<>-1then290
+  292 return
+  293 a=int(rnd(1)*36)+1
+  294 b=int(rnd(1)*9)+1:b=b+9
+  295 ifm(a,b)thenreturn
+  296 goto293
+  297 printa","b;
+  298 return
+  299 gosub58:print"hit a wall";
+  300 gosub297:print:gosub58
+  301 m(a1,b1)=sgn(m(a1,b1))
+  302 m(a,b)=1.5
+  303 return
+  304 gosub237:gosub58:gosub43
+  305 if se=3thenprint"{home}your time is up"
+  306 ifse=1thenprint"cave senatum -";a$(3);"morituri te salutant "
+  307 ifse=2thenprinta1$;an;"triumphus in roma";"{down}{left}{left}{left}{left}{left}salve triumphator "
+  308 ifrh<ro+rcthenprintr$;"has not enough corn for winter!"
+  309 ifph<po+pcthenprinte$;"has not enough corn for winter!"
+  310 ifpt<0thenprinte$;"is bankrupt{$a0}!"
+  311 ifrt<0thenprintr$;"are bankrupt{$a0}!"
+  312 ifro<=0thenprintr$;"loose their last market !"
+  313 ifpo<=0thenprinte$;"looses his last market !"
+  314 ifpc<=0thenprinte$;"looses his last castle !"
+  315 ifrc<=0thenprintr$;"loose his last castle !"
+  316 gosub58:ifse=3andvr>vgthenprintr$;"tactical victory"
+  317 ifse=3andvg>vrthenprinte$;"has a tactical victory !"
+  318 print"{home}{rvon}another game ?{rvof}":getz$:fori=1to1000:next:ifz$=""then318
+  319 ifz$="n"thenprintfre(0):end
+  320 run
+  321 ifm(u,v)=-1.1thenprint"{rvon}W{rvof}";:goto251
+  322 ifm(u,v)=-1.2thenprint"{rvon}Z{rvof}";:goto251
+  323 ifm(u,v)=-1.3thenprint"{rvon}V{rvof}";:goto251
+  324 ifm(u,v)=-1.4thenprint"{rvon}X{rvof}";:goto251
+  325 ifm(u,v)=-1.7thenprint"{rvon}f{rvof}";:goto251
+  326 ifm(u,v)=1.1thenprint"W";:goto251
+  327 ifabs(m(u,v))=1.2thenprint"Z";:goto251
+  328 ifabs(m(u,v))=1.3thenprint"V";:goto251
+  329 ifabs(m(u,v))=1.4thenprint"X";:goto251
+  330 ifabs(m(u,v))=1.5andv>10thenprint"g";:m(u,v)=-1:goto251
+  331 ifabs(m(u,v))=1.5thenprint"+";:m(u,v)=1:goto251
+  332 ifabs(m(u,v))=1.6thenprint"{CBM-R}";:goto251
+  333 ifabs(m(u,v))=1.7thenprint"f";:goto251
+  334 ifw<0then338
+  335 goto249
+  338 ifw<-2.8thenprint"{rvon}9{rvof}";:goto251
+  339 ifw<-2.7thenprint"{rvon}8{rvof}";:goto251
+  340 ifw<-2.6thenprint"{rvon}7{rvof}";:goto251
+  341 ifw<-2.5thenprint"{rvon}6{rvof}";:goto251
+  342 ifw<-2.4thenprint"{rvon}5{rvof}";:goto251
+  343 ifw<-2.3thenprint"{rvon}4{rvof}";:goto251
+  344 ifw<-2.2thenprint"{rvon}3{rvof}";:goto251
+  345 ifw<-2.1thenprint"{rvon}2{rvof}";:goto251
+  346 ifw<=-2 thenprint"{rvon}1{rvof}";:goto251
+  347 goto247
+  348 print"{home}{down}you hit";a,b
+  349 ifabs(n)=1.1thenprintm$:ro=ro-1:return
+  350 ifabs(n)=1.2thenprintc$:rc=rc-1:return
+  351 ifabs(n)=1.3thenprintg$:rh=rh-1:return
+  352 ifabs(n)=1.4thenprintv$:rv=rv-1:return
+  353 ifabs(n)=1.7thenprintf$:rf=rf-1:return
+  354 ifabs(n)>2thenprintl1$:return
+  355 print"{home}{down}{down}land": return
+  356 print"{home}{down}you hit";a,b:return
+  357 ifabs(n)=1.1thenprintm$:po=po-1:return
+  358 ifabs(n)=1.2thenprintc$:pc=pc-1:return
+  359 ifabs(n)=1.3thenprintg$:ph=ph-1:return
+  360 ifabs(n)=1.4thenprintv1$:pv=pv-1:return
+  361 ifabs(n)=1.7thenprintf$:pf=pf-1:return
+  362 ifabs(n)>2thenprintl1$:return
+  363 print"{home}{down}{down}land":return
+  364 remz>=yz$
+  365 printy$(z);
+  366 forxz=1to36
+  367 w=m(xz,z):ifw=-1orw=-1.4thenprint"g";:goto379
+  368 ifw=1thenprint"+";:goto379
+  369 ifw<0then381
+  370 ifw=0thenprint" ";:goto379
+  371 ifw=1.1thenprint"W";:goto379
+  372 ifw=1.2thenprint"Z";:goto379
+  373 ifw=1.3thenprint"V";:goto379
+  374 ifw=1.4thenprint"X";:goto379
+  375 ifw=1.5thenprint"*";:goto379
+  376 ifw=1.6thenprint"{CBM-R}";:goto379
+  377 ifw=1.7thenprint"f";:goto379
+  378 gosub442:goto379
+  379 nextxz
+  380 return
+  381 ifw>-2then391
+  382 ifw<-2.8thenprint"{rvon}9{rvof}";:goto379
+  383 ifw<-2.7thenprint"{rvon}8{rvof}";:goto379
+  384 ifw<-2.6thenprint"{rvon}7{rvof}";:goto379
+  385 ifw<-2.5thenprint"{rvon}6{rvof}";:goto379
+  386 ifw<-2.4thenprint"{rvon}5{rvof}";:goto379
+  387 ifw<-2.3thenprint"{rvon}4{rvof}";:goto379
+  388 ifw<-2.2thenprint"{rvon}3{rvof}";:goto379
+  389 ifw<-2.1thenprint"{rvon}2{rvof}";:goto379
+  390 print"{rvon}1{rvof}";:goto379
+  391 ifw=-1.1thenprint"{rvon}W{rvof}";:goto379
+  392 ifw=-1.2thenprint"{rvon}Z{rvof}";:goto379
+  393 ifw=-1.3thenprint"{rvon}V{rvof}";:goto379
+  394 ifw=-1.7thenprint"{rvon}f{rvof}";:goto379
+  395 goto382
+  396 z=b1:gosub405:ifb1=y1then189
+  397 z=y1:gosub405:goto189
+  398 ifint(av)=4thengosub237:return
+  399 ifan=1andav=1thenreturn
+  400 gosub59:print"orbis romanus";a$(3);a1$;an;a$(5);"{down}";an$(int(av))
+  401 cm=0:sm=0:rr=0:sa=0:ca=0
+  402 print"{home}{down}"fre(0);:print"bytes free":vv=0
+  403 gosub58:return
+  405 printy$(z);
+  406 forxz=1to36
+  407 w=m(xz,z):ifw<0then420
+  408 ifw=0thenprint" ";:goto418
+  409 ifw=1thenprint"+";:goto418
+  410 ifw=1.1thenprint"W";:goto418
+  411 ifw=1.2thenprint"Z";:goto418
+  412 ifw=1.3thenprint"V";:goto418
+  413 ifw=1.4thenprint"X";:goto418
+  414 ifw=1.5thenprint"*";:goto418
+  415 ifw=1.6thenprint"{CBM-R}";:goto418
+  416 ifw=1.7thenprint"f";:goto418
+  417 gosub442:goto418
+  418 nextxz
+  419 return
+  420 ifw<-2.8thenprint"{rvon}9{rvof}";:goto418
+  421 ifw<-2.7thenprint"{rvon}8{rvof}";:goto418
+  422 ifw<-2.6thenprint"{rvon}7{rvof}";:goto418
+  423 ifw<-2.5thenprint"{rvon}6{rvof}";:goto418
+  424 ifw<-2.4thenprint"{rvon}5{rvof}";:goto418
+  425 ifw<-2.3thenprint"{rvon}4{rvof}";:goto418
+  426 ifw<-2.2thenprint"{rvon}3{rvof}";:goto418
+  427 ifw<-2.1thenprint"{rvon}2{rvof}";:goto418
+  428 ifw>-2thenprint"g";:goto418
+  429 print"{rvon}1{rvof}";:goto418
+  430 n=abs(n):m=abs(m):print"{home}{down}";b$;"at";a,b:nb=nb+1:rem n roman;m new
+  431 m=m-2:n=n-2:m=m*10:n=n*10:rk=m*rnd(1):pk=n*rnd(1)
+  432 pk=abs(pk):ifpk>mthenpk=abs(m)
+  433 rk=abs(rk):ifrk>nthenrk=abs(n)
+  434 n=n-rk:rl=rl+60*rk:rm=rm-rk:pl=pl+60*pk:pm=pm-pk:m=m-pk
+  435 n=n/10:m=m/10:ifm<.02thenm=0
+  436 ifn<.02thenn=0
+  437 m(a1,b1)=2+n:m(a,b)=-2-m:gosub599
+  438 ifm<=0thenm(a,b)=+1:print"{home}{down}{down}{down}";e$;"retreats ":cr=abs(cr+pk/3):wr=wr+1
+  439 ifn<=0thenm(a1,b1)=-1:print"{home}{down}{down}{down}";r$;"retreats ":ce=abs(ce+rk/3):wg=wg+1
+  440 gosub457:ifse<>0then304
+  441 return
+  442 ifw>2.9thenprint"l";:return
+  443 ifw>2.8thenprint"9";:return
+  444 ifw>2.7thenprint"8";:return
+  445 ifw>2.6thenprint"7";:return
+  446 ifw>2.5thenprint"6";:return
+  447 ifw>2.4thenprint"5";:return
+  448 ifw>2.3thenprint"4";:return
+  449 ifw>2.2thenprint"3";:return
+  450 ifw>2.1thenprint"2";:return
+  451 print"1";:return
+  452 ifm(x1,y1-1)=1orm(x1,y-1)=1.5orm(x1,y1-1)=-1then454
+  453 goto189
+  454 y1=y1-1:m(x1,y1)=m(a1,b1):m(a1,b1)=-1:goto396
+  455 b=b+1:ifabs(m(a,b))=1orm(a,b)=1.5thenm(a,b)=n:m(a1,b1)=1:br=1:return
+  456 br=0:print"{home}{down}{down}bridge hold by ";e$:gosub58:return
+  457 forx=1to36:w=m(x,1)
+  458 ifw<0thenprint"{clr}{rvon}german reach bottom line{rvof}":se=1
+  459 nextx
+  460 ifpl>pm*120thenprint"{clr}{rvon}after several battles , german retreat {rvof}":se=2
+  461 ifrl>rm*120thenprint"{clr}{rvon}roman lost several legions {rvof}":se=1
+  462 gosub58:return
+  463 ifpo=0orpc=0orph<po+pcorpt<-2000thense=2
+  464 ifro=0orrc=0orrh<ro+rcorrt<-2000thense=1
+  465 ifse=0andan<16thenreturn
+  466 print"{clr}";a$(4);"{down}{down}german=reverse"
+  467 ifan>=9thense=3:print"it is the year of the 'varusbattle' !"
+  468 print"{home}{down}{down}{down}":goto304:rem end of game
+  470 rem victory points
+  471 vr=rc*150+ro*50+rh*25+rf*5+rv*5+rt/100+rm*20+cr*10-rl/10+100*(wr-wg)
+  472 vg=pc*150+po*50+ph*25+pf*5+pv*5+pt/100+pm*20+ce*10-pl/10+100*(wg-wr)
+  473 vr=int(vr):vg=int(vg)
+  474 return
+  480 gosub58
+  481 input"how many streets to build(<=5)";rs
+  482 rs=int(rs)+1
+  483 ifrs>5thenrs=5
+  484 ifrs<0thenrs=0
+  485 rt=rt-rs*200
+  486 return
+  599 ifm=0orn=0thenreturn
+  600 ifpk>1.2*rkthen603
+  601 ifrk>1.2*pkthen620
+  602 return
+  603 ifb=18ora=1ora=36thenreturn
+  604 gosub59:print"{home}{down}";r$;"victory"
+  605 zp=m(a-1,b+1):ifzp=1orzp=-1orzp=1.5thenm(a-1,b+1)=-2-m:m=0:return
+  606 zp=m(a,b+1):ifzp=1orzp=-1orzp=1.5thenm(a,b+1)=-2-m:m=0:return
+  607 zp=m(a+1,b+1):ifzp=1orzp=-1orzp=1.5thenm(a+1,b+1)=-2-m:m=0:return
+  608 zp=m(a+1,b):ifzp=1orzp=-1orzp=1.5thenm(a+1,b)=-2-m:m=0:return
+  609 zp=m(a-1,b):ifzp=1orzp=-1orzp=1.5thenm(a-1,b)=-2-m:m=0:return
+  610 zp=m(a-1,b-1):ifzp=1orzp=-1orzp=1.5thenm(a-1,b-1)=-2-m:m=0:return
+  611 zp=m(a+1,b-1):ifzp=1orzp=-1orzp=1.5thenm(a+1,b-1)=-2-m:m=0:return
+  612 zp=m(a,b-1):ifzp=1orzp=-1orzp=1.5thenm(a,b-1)=-2-m:m=0:return
+  613 m=0:print"{home}{down}{down}{rvon}surrounded{rvof}":return
+  620 ifb1=180ora1=1ora1=36thenreturn
+  621 gosub59:print"{home}{down}";e$;"wins"
+  622 zr=m(a1-1,b1+1):ifzr=1orzr=-1orzr=1.5thenm(a1-1,b1+1)=2+n:n=0:return
+  623 zr=m(a1,b1+1):ifzr=1orzr=-1orzr=1.5thenm(a1,b1+1)=2+n:n=0:return
+  624 zr=m(a1+1,b1+1):ifzr=1orzr=-1orzr=1.5thenm(a1+1,b1+1)=2+n:n=0:return
+  625 zr=m(a1,b1+1):ifzr=1orzr=-1orzr=1.5thenm(a1,b1+1)=2+n:n=0:return
+  626 zr=m(a1-1,b1):ifzr=1orzr=-1orzr=1.5thenm(a1-1,b1)=2+n:n=0:return
+  627 zr=m(a1-1,b1-1):ifzr=1orzr=-1orzr=1.5thenm(a1-1,b1-1)=2+n:n=0:return
+  628 zr=m(a1+1,b1-1):ifzr=1orzr=-1orzr=1.5thenm(a1+1,b1-1)=2+n:n=0:return
+  629 zr=m(a1,b1-1):ifzr=1orzr=-1orzr=1.5thenm(a1,b1-1)=2+n:n=0:return
+  630 n=0:print"{home}{down}{down}{rvon}surrounded{rvof}":return
+  800 printy$(11);"disk or tape ?":getz$:ifz$="t"orz$="d"then802
+  801 goto800
+  802 print"enter filename"
+  803 inputf1$
+  804 ifz$="t"thenopen2,1,0,f1$:goto806
+  805 f1$="0:"+f1$+",s,r":open2,8,2,f1$
+  806 forx=1to36:fory=1to18:input#2,m(x,y):next:next
+  807 input#2,an,av,rt,pt,rm,pm,ro,po,rc,pc,rh,ph,rf,pf,rv,pv,rp,rl,pl,cr,ce
+  808 close2:gosub236:goto86
+ 1000 print"{home}save game (y/n) ?":getz$:ifz$="y"orz$="n"then1002
+ 1001 goto 1000
+ 1002 ifz$="n"thenend
+ 1003 print"{home}{down}disk or tape ?":getz$:ifz$="t"orz$="d"then1005
+ 1004 goto1003
+ 1005 gosub59:print"enter filename"
+ 1006 inputf1$
+ 1007 ifz$="t"thenopen2,1,1,f1$:goto1009
+ 1008 f1$="@0:"+f1$+",s,w":open2,8,2,f1$
+ 1009 cr$=chr$(13):forx=1to36:fory=1to18:print#2,m(x,y);cr$;:next:next
+ 1010 print#2,an;cr$;av;cr$;rt;cr$;pt;cr$;rm;cr$;pm;cr$;ro;cr$;po;cr$;
+ 1011 print#2,rc;cr$;pc;cr$;rh;cr$;ph;cr$;rf;cr$;pf;cr$;rv;cr$;pv;cr$;
+ 1012 print#2,rp;cr$;rl;cr$;pl;cr$;cr;cr$;ce;cr$;
+ 1013 close2:gosub59
+ 1014 print"{home}continue game (y/n) ?":getz$:ifz$=""then1014
+ 1015 ifz$="y"then87
+ 1016 end
+ 9999 rem save"@0:imperium romanum",8
