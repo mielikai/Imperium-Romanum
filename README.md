@@ -80,7 +80,7 @@ Explanation of the Code Lines
 -----------------------------
 
 - 1-20: Initialize variables
-- 21-35: Initialize the map
+- 21-35: Initialize the map. Should line 27 set the number of bridges to 2 instead of letting it be 0? Actually, it could be only 1 as the bridge might be positioned at M(0,8), which is outside of the visible map
 - 36-40: Place German troops on row 10 and Roman legions on row 9. Entered difficulty level DI tells how much to increase the column value (1-35) between each step in the troop placements loop.
 Should the increase in the number German soldiers be moved before the if-condition for the Roman land so that the increase would happen irrespectively of the Roman troop increase?
 - 41: Use a saved game?
@@ -89,7 +89,7 @@ Should the increase in the number German soldiers be moved before the if-conditi
 - 58: Ask user to "PRESS RETURN"
 - 59-61: Clear the first five lines on the screen
 - 62-63: Build a market
-- 64-66: Build a castle. It can be located on any Roman land that has Roman land both to the south and to the west side
+- 64-66: Build a castle. It can be located on any Roman land that has Roman land both to the south and to the east side
 - 67-70: Build a granary
 - 71-74: Build a wall
 - 75-76: Build a bridge
@@ -116,15 +116,15 @@ Should the increase in the number German soldiers be moved before the if-conditi
 - 119: Increase the time
 - 120: Romans use artillery?
 - 121-162: Romans move the troops or artillery. If an artillery is moved to a wall the unit is "TRAPPED" and the wall is destroyed. If a legion is moved to a wall then a third of the troops are killed. You can't stack "MORE THAN 2 LEGIONS". A move to a Roman land (line 133) and crossing a bridge (line 137) counts as a move (RR), which are limited by the number of streets build that turn +1 (line 148). There is a second limitation to the number of moves (SM) on line 121 where SM>5+RM/50 ends the troop movement phase. Essentially, at least five moves are allowed and the rest depends on the number of the number of soldiers (RM). Spring time reduces the number of available moves via SM to half (line 122)
-- 163-185: Roman artillery. If the Euclidean distance from the gun location to the target is smaller than 6+5*RND(1), i.e. [6,11], then one of the three aberration steps in the gun's accuracy algorithm is skipped. Thus, increasing the accuracy of the artillery fire in the y-direction
-- 186-219: German loops over rows 2-17 selecting a random column on each row looking for a German troops. The loop repeats until a unit is found. The target search is columns first from the upper-left corner. The last found target is used. Preferring non-land and non-crater Roman targets
+- 163-185: Roman artillery. If the Euclidean distance from the gun location to the target is smaller than 6+5*RND(1), i.e. [6,11], the first aberration step in the gun's accuracy algorithm is skipped ([-3,0] in the y-direction). The other random aberrations step is uniformly random [-2,2]x[-2,2]
+- 186-219: German loops over rows 2-17 selecting a random column on each row looking for German troops to move. The loop repeats until troops are found. The target search is performed column first from the upper-left corner. The last found target is used. Non-land and non-crater Roman targets are preferred. DOES LINE 217 MOVE TROOPS TO THE BRIDGE AND CHANGE GERMAN TROOPS INTO ROMANS?
 - 220-221: Has a German unit reached the first row?
 - 222-232: German artillery hits a random Roman target in the row range of [1+INT(AV), 10+INT(AV)], where AV=1 is the spring and AV=4 is the winter
 - 233-234: German artillery hits a Roman legion killing one third of them
 - 235-236: Clear screen and print "SPQR"
 - 237-259: Print the map
 - 260-271: Get a marching direction for the Roman troops
-- 272-275: Check that the marching troops don't go out of the map or to the water. Should the code allow Romands to go to the topmost row of the map?
+- 272-275: Check that the marching troops don't go out of the map or to the water. Romans can't go to the topmost row of the map
 - 276-279: Enter a valid map coordiate
 - 280: Unused call to a subroutine clearing the first five lines 
 - 281-289: Enter the build coordinates
@@ -143,7 +143,7 @@ Should the increase in the number German soldiers be moved before the if-conditi
 - 398-403: Current year and season
 - 405-419: Print row Z of the map revealing German troops
 - 420-429: Print a German troop (1-9) or land (G)
-- 430-441: German troops with a strength of M at A,B have a combat with a Roman legion with a strength of N at A1,B1. Used by both the Romans (line 140) and the Germans (line 210). 
+- 430-441: German troops with a strength of M at A,B have a combat with a Roman legion with a strength of N at A1,B1. Subroutine is used by both the Romans (line 140) and the Germans (line 210). 
 When the troops are completely wiped out "RETREATS" message is printed and the number of captures officers in a battle is increased. Why ABS() in captured officers calculation? Should the number of troops be updated if they are "SURROUNDED"?
 - 442-451: Print a Roman legion (1-9,L)
 - 452-454: Germans use a bridge if there's empty land on the south, south-west or south-east of it.
